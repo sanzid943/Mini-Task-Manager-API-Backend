@@ -43,6 +43,18 @@ builder.Services.AddSwaggerGen(options =>
         });
 });
 
+// CORS policy
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AngularLocal", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 // postgreSQL database connection
 
@@ -201,6 +213,10 @@ if (app.Environment.IsDevelopment())
 // https redirection
 
 app.UseHttpsRedirection();
+
+// CORS
+
+app.UseCors("AngularLocal");
 
 // authentication and authorization
 
